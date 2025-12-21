@@ -1,0 +1,99 @@
+#include "ZSCRIPT.StoreItems.PBWPWeapons.zsc"
+#include "ZSCRIPT.StoreItems.PBWeapons.zsc"
+#include "ZSCRIPT.StoreItems.PBItems.zsc"
+#include "ZSCRIPT.StoreItems.PBAmmo.zsc"
+
+class StoreCurrency abstract
+{
+	abstract string GetCurrencyClass();
+	abstract string GetIcon();
+	virtual double GetPriceMult() { return 1.0; }
+}
+
+class PBScoreCurrency : StoreCurrency
+{
+    override string GetCurrencyClass() { return "PB_Score"; }
+    override string GetIcon() { return "MBCKA0"; }
+    override double GetPriceMult() { return 1.0; }
+}
+
+class BucksCurrency : StoreCurrency
+{
+	override string GetCurrencyClass() { return "MercenaryBucks"; }
+	override string GetIcon() { return "MBCKA0"; }
+}
+
+class StoreItem abstract
+{
+	enum ItemType
+	{
+		SType_Weapon,
+		SType_Ammo,
+		SType_Item
+	}
+
+	// --------------------------------------------------
+	// STATIC
+	// --------------------------------------------------
+
+	static int GetAdjustedPrice(StoreItem item, StoreCurrency currency)
+	{
+		return int(max(ceil(Item.GetBasePrice() * Currency.GetPriceMult()), 1));
+	}
+
+	// --------------------------------------------------
+	// VIRTUALS
+	// --------------------------------------------------
+
+	protected abstract int GetBasePrice(); // [Ace] The base price is for merc bucks.
+	abstract string GetCategory();
+	abstract string GetDisplayName();
+	abstract string GetIcon();
+	abstract Name GetItem();
+	abstract int GetType();
+
+	virtual int GetAmount() { return 1; }
+	virtual string GetFlavorText() { return ""; }
+	virtual int GetStoreAmount()
+	{
+		switch (GetType())
+		{
+			case SType_Weapon:
+			{
+				return randompick[merchrand](1, 1, 1, 1, 1, 1, 1, 2);
+			}
+			case SType_Ammo:
+			{
+				if (GetAmount() == 1)
+				{
+					return random[merchrand](1, 5) * hdm_stock_ammo;
+				}
+				return randompick[merchrand](1, 2, 3, 3, random[merchrand](2, 6)) * hdm_stock_ammo;
+			}
+			case SType_Item:
+			{
+				if (GetBasePrice() <= 15)
+				{
+					return randompick[merchrand](1, 2, 2, 3, 3, 3, random[merchrand](4, 7));
+				}
+				if (GetBasePrice() <= 40)
+				{
+					return randompick[merchrand](1, 1, 2, 2, 2, 3, 3, 4, 4, 5);
+				}
+				if (GetBasePrice() <= 80)
+				{
+					return randompick[merchrand](1, 1, 1, 2, 2, 2, 3, 3);
+				}
+				return 1;
+			}
+		}
+
+		return 666;
+	}
+	
+	// --------------------------------------------------
+	// VARIABLES
+	// --------------------------------------------------
+
+	int StoreAmount;
+}

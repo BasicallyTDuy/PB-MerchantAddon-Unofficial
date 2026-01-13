@@ -165,13 +165,13 @@ class MerchantSlotMachine : Actor
 		bool add = user.player.cmd.buttons & BT_SPEED;
 		if (add || InsertedAmmo == 0)
 		{
-			if (!user.CheckInventory('NewShell', 10))
+			if (!user.CheckInventory('PB_Shell', 10))
 			{
 				user.A_Log("You don't have enough Shells.", true);
 				return false;
 			}
 			A_StartSound("misc/casing", 6);
-			user.A_TakeInventory('NewShell', 10);
+			user.A_TakeInventory('PB_Shell', 10);
 			InsertedAmmo += 10;
 		}
 		if (!add)

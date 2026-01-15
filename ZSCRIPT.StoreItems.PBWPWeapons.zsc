@@ -66,7 +66,7 @@ class PBGodEnragedBFGStore : StoreItem
 	override int GetType() { return SType_Weapon; }
 	override string GetCategory() { return "God Complex"; }
 	override Name GetItem() { return 'GodEnragedBFG'; }
-	override string GetIcon() { return "UVBG A"; }
+	override string GetIcon() { return "UVBGA0"; }
 	override string GetDisplayName() { return "God Enraged BFG"; }
 	override int GetBasePrice() { return 5000; }
 	override string GetFlavorText() { return ""; }

@@ -179,7 +179,7 @@ class PBBFGStore : StoreItem
 	override int GetType() { return SType_Weapon; }
 	override string GetCategory() { return "Project Brutality Energy"; }
 	override Name GetItem() { return 'PB_BFG9000'; }
-	override string GetIcon() { return "RDABX0"; }
+	override string GetIcon() { return "097GA0"; }
 	override string GetDisplayName() { return "BFG 9000 Mark IV"; }
 	override int GetBasePrice() { return 600; }
 	override string GetFlavorText() { return "Because fuck your targets, fuck your shoulder, fuck their cover, and fuck you."; }
